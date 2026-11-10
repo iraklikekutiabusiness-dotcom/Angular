@@ -1,0 +1,37 @@
+<app-site-header />
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><i></i> YOUR NEXT GETAWAY STARTS HERE</span>
+      <h1>Find your perfect stay</h1>
+      <p>Discover and book hotels around Georgia with ease</p>
+      <app-hotel-search [(query)]="searchTerm" (search)="search($event)" />
+      <div class="hero-note"><span>✓</span> Handpicked stays for your next escape</div>
+    </div>
+    <div class="hero-landscape" aria-hidden="true"><span class="sun"></span><span class="mountains"></span><span class="villa"></span><span class="tree"></span><span class="lake"></span></div>
+  </section>
+
+  <section class="hotels-section" aria-labelledby="hotels-title">
+    <div class="section-heading">
+      <div><span class="section-kicker">A LITTLE INSPIRATION</span><h2 id="hotels-title">Explore hotels</h2><p>Find a stay that feels like it was made for you.</p></div>
+      @if (searchTerm()) { <button class="search-chip" type="button" (click)="search('')">“{{ searchTerm() }}” <span>×</span></button> }
+    </div>
+    <app-hotel-filter-bar (applied)="applyFilters($event)" />
+    <div class="result-count">{{ loading() ? 'Finding your stay…' : error() ? 'Hotel stays' : totalCount() + ' stays to discover' }}</div>
+
+    @if (loading()) {
+      <div class="hotel-grid" aria-label="Loading hotels">@for (item of [1,2,3,4,5,6]; track item) { <div class="skeleton"><span></span><span></span><span></span></div> }</div>
+    } @else if (error()) {
+      <div class="message"><span class="message-icon">!</span><h3>We couldn’t reach the stays</h3><p>{{ error() }}</p><button type="button" (click)="search(searchTerm())">Try again</button></div>
+    } @else if (hotels().length === 0) {
+      <div class="message"><span class="message-icon">⌕</span><h3>No stays found</h3><p>Try another name or clear the filters.</p><button type="button" (click)="applyFilters({}); search('')">Show all hotels</button></div>
+    } @else {
+      <div class="hotel-grid">
+        @for (hotel of hotels(); track hotel.id) { <app-hotel-card [hotel]="hotel" /> }
+      </div>
+    }
+  </section>
+</main>
+
+<footer class="footer"><span>Made for the moments away.</span><span>© STEP Booking</span></footer>

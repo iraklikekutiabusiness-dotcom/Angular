@@ -1,0 +1,11 @@
+<app-site-header />
+<main class="detail-page">
+  @if (state().loading) {
+    <div class="loading"><span></span><span></span><span></span><p>Loading hotel details…</p></div>
+  } @else if (state().error) {
+    <div class="error-state"><span>⌕</span><h1>Hotel not found</h1><p>{{ state().error }}</p><a routerLink="/">Back to hotels</a></div>
+  } @else if (state().hotel) {
+    <app-hotel-detail-content [hotel]="state().hotel!" [rooms]="state().rooms" />
+  }
+</main>
+<footer class="footer"><a routerLink="/">← Back to all hotels</a><span>© STEP Booking</span></footer>
