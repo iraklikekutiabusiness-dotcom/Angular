@@ -16,3 +16,4 @@ npm start
 - `src/app/features/hotels/data-access/` contains typed API models and the hotel API service.
 
 The hotel feature calls the STEP Booking API for hotel listing, search, filters, hotel details, and rooms belonging to a hotel. Set a valid `X-STEP-KEY` locally in `src/app/core/config/api.config.ts` before running the app. Do not commit the key: browser app source is public. For a public production app, send API requests through a server-side proxy.
+"# Angular" 
